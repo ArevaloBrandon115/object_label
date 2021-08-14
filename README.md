@@ -18,7 +18,8 @@ GameObject tool that shows more information about the parts that make that objec
 
 
 <a name="Features"/>
-A part can highlights when hovering over the corresponding part or Button on the left hand side
+
+A object could be highlighted when hovering over the corresponding part or the button on the left hand side
 
 <a name="Scripts"/>
 
