@@ -29,7 +29,7 @@ An object could be highlighted in two ways:
 
 ### Assets/Scripts/ObjectSelection:
 
-This controls the Highlighing, the buttons, the arrow pointing to the part
+This controls the Highlighing, the buttons, the arrow pointing to the object
   - HighlighingObject
   - ISelectionResponse
   - SelectionManager
