@@ -16,10 +16,12 @@ GameObject tool that shows more information about the parts that make that objec
 - Zoom: You can zoom by scrolling your mouse wheel
 - Rotate: You can rotate by holding down the left control key on your keyboard and scrolling with your mouse wheel
 
-
 <a name="Features"/>
 
-A object could be highlighted when hovering over the corresponding part or the button on the left hand side
+## Features
+An object could be highlighted in two ways:
+1. Hovering over the object itself.
+2. Hovering over the button on the left hand side of the screen corresponding to that object.
 
 <a name="Scripts"/>
 
