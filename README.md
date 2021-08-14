@@ -11,10 +11,10 @@ GameObject tool that shows more information about the parts that make that objec
 
 <a name="Controls"/>
 
-## Controls
+## Controls (note: make sure the mouse isn't on any UI element)
 - Move: You can move around by clicking and holding the left mouse button 
-- zoom: You can zoom by scrolling (note: make sure the mouse isn't on any UI element)
-- rotate: You can rotate by holding down the left control key on your keyboard and scrolling
+- Zoom: You can zoom by scrolling your mouse wheel
+- Rotate: You can rotate by holding down the left control key on your keyboard and scrolling with your mouse wheel
 
 
 <a name="Features"/>
