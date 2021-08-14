@@ -24,7 +24,7 @@ A part can highlights when hovering over the corresponding part or Button on the
 
 ## Main scripts (Assets/Scripts):
 
-### /ObjectSelection:
+### Assets/Scripts/ObjectSelection:
 
 This controls the Highlighing, the buttons, the arrow pointing to the part
   - HighlighingObject
@@ -32,7 +32,7 @@ This controls the Highlighing, the buttons, the arrow pointing to the part
   - SelectionManager
 
 
-### /CameraContoller:
+### Assets/Scripts/CameraContoller:
 
 This controls the zoom, panning, rotating of the camera
   - CameraController
