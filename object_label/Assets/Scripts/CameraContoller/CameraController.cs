@@ -7,7 +7,7 @@ namespace CameraController {
     public class CameraController : MonoBehaviour {
         [SerializeField] private Camera movingCamera;
         [SerializeField] private float ZoomSpeed = 3;
-        [SerializeField] private float MinZoom = 3.0f;
+        [SerializeField] private float MinZoom = 6.0f;
         [SerializeField] private float MaxZoom = 20.0f;
 
         [SerializeField] private float PanSpeed = 10;
@@ -38,8 +38,10 @@ namespace CameraController {
         }
 
         void Update() {
-            HandleZoomAndRotation();
-            HandlePan();
+            if (!MouseInputUIBlocker.BlockedByUI) { 
+                HandleZoomAndRotation();
+                HandlePan();
+            }
         }
 
         //handle panning on map

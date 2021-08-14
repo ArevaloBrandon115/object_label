@@ -9,59 +9,54 @@ public class SelectionManager : MonoBehaviour {
     [SerializeField] private Camera UICamera;
 
     private ISelectionRepsonse _selectionResponse;
-
     private Transform _selection;
 
     [SerializeField] private LineRenderer lineRenderer;
-    //[SerializeField] private LineRenderer lineRendereArrow;
-    private Vector3 tempCurrent;
-    [SerializeField] private GameObject arrowImage;
+    [SerializeField] private GameObject partLabelText;
+    [SerializeField] private GameObject cameraContainer;
+    [SerializeField] private GameObject buttonContainer;
+    [SerializeField] private GameObject carGameObject;
+    [SerializeField] private GameObject ButtonPrefab;
 
 
-    private Transform[] points;
-    public GameObject gameObjectLabel;
     private void Awake() {
         _selectionResponse = GetComponent<ISelectionRepsonse>();
-        //Vector3 temp = cameraUsed.WorldToScreenPoint(gameObjectLabel.transform.position);
-        //lineRenderer.SetPosition(1, gameObjectLabel.transform.position);
-        //lr.SetPosition(1, new Vector3(8, 3, 45));
+        SetUpButtons();
     }
 
     void Update() {
-        //arrowImage.transform.LookAt(cameraUsed.transform.position);
         //deselecting
         if (_selection != null) {
             _selectionResponse.OnDeselect(_selection);
+        }
+        if (partLabelText.activeSelf) {
+            partLabelText.transform.rotation = Quaternion.LookRotation(partLabelText.transform.position - cameraUsed.transform.position);
         }
         //selecting an object left click
         Ray ray = cameraUsed.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         _selection = null;
-        if (Physics.Raycast(ray, out hit)) {
+        if (Physics.Raycast(ray, out hit,1000f)) {
             Transform selection = hit.transform;
             if (selection.CompareTag(selectableTag)) {
                 _selection = selection;
                 if (Input.GetMouseButtonDown(0)) {
-                    Debug.Log("clicked on: " + hit.transform.gameObject.transform.position + " vs "+ hit.transform.position);
-                    lineRenderer.SetPosition(0, hit.transform.gameObject.transform.position);
-                    lineRenderer.SetPosition(1, gameObjectLabel.transform.position);
-                    /*lineRendereArrow.SetPosition(0, hit.transform.position);
-                    lineRendereArrow.SetPosition(1, hit.transform.position + new Vector3(0.2f, 0, 0));*/
+                    //Debug.Log("clicked on: " + hit.transform.name);
+                    lineRenderer.SetPosition(0, hit.point);
+                    lineRenderer.SetPosition(1, partLabelText.transform.position);
 
-                    /*if (gameObjectLabel.transform.position.y > hit.transform.gameObject.transform.position.y) {
-                        tempCurrent = new Vector3(gameObjectLabel.transform.position.x, hit.transform.gameObject.transform.position.y, gameObjectLabel.transform.position.z);
-                    }
-                    else {
-                        tempCurrent = gameObjectLabel.transform.position;
-                    }
+                    cameraContainer.transform.position = hit.transform.position;
+                    cameraUsed.orthographicSize = 5;
 
-                    Vector3 dir = (hit.transform.gameObject.transform.position - tempCurrent).normalized;
-                    arrowImage.transform.rotation = Quaternion.FromToRotation(new Vector3(0, 1, 0), dir);
-                    arrowImage.transform.position = hit.transform.gameObject.transform.position;*/
-                    //reset x to 90
-                    //arrowImage.transform.eulerAngles = new Vector3(90, arrowImage.transform.eulerAngles.y, arrowImage.transform.eulerAngles.z);
-                    //arrowImage.transform.LookAt(new Vector3(arrowImage.transform.position.x, hit.transform.position.y, hit.transform.position.z));
-
+                    partLabelText.GetComponent<TextMesh>().text = hit.transform.name;
+                    partLabelText.SetActive(true);
+                }
+            }
+            else {
+                if (Input.GetMouseButtonDown(0)) {
+                    partLabelText.SetActive(false); 
+                    lineRenderer.SetPosition(0, Vector3.zero);
+                    lineRenderer.SetPosition(1, Vector3.zero);
                 }
             }
         }
@@ -71,8 +66,36 @@ public class SelectionManager : MonoBehaviour {
         }
     }
 
-    public void SetUpLine(Transform[] points) {
-        lineRenderer.positionCount = points.Length;
-        this.points = points;
+    public void GetCarInformation(GameObject gameObject) {
+        Debug.Log("GET INFO: " + gameObject.transform.name);
+
+        lineRenderer.SetPosition(0, gameObject.GetComponent<MeshRenderer>().bounds.center);
+        lineRenderer.SetPosition(1, partLabelText.transform.position);
+
+        cameraContainer.transform.position = gameObject.transform.position;
+        cameraUsed.orthographicSize = 5;
+
+        partLabelText.GetComponent<TextMesh>().text =  gameObject.transform.name;
+        partLabelText.SetActive(true);
+    }
+
+    private void SetUpButtons() {
+        Debug.Log("set up buttons");
+        //get children objects
+        Transform[] allChildren = carGameObject.GetComponentsInChildren<Transform>();
+        int index = 0;
+        foreach (Transform child in allChildren) {
+            if (index > 0) { 
+                GameObject newButton = (GameObject)Instantiate(ButtonPrefab);
+                //make a button for each make them clickable
+                newButton.GetComponent<Button>().onClick.AddListener(() => { 
+                    GetCarInformation(child.transform.gameObject); 
+                });
+                newButton.GetComponentInChildren<Text>().text = child.transform.gameObject.name.ToString();
+                newButton.transform.SetParent(buttonContainer.transform);
+            }
+            index++;
+        }
+
     }
 }
