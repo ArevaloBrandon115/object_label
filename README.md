@@ -13,7 +13,7 @@ GameObject tool that shows more information about the parts that make that objec
 
 ## Controls
 - Move: You can move around by clicking and holding the left mouse button 
-- zoom: you can zoom by scrolling (note: make sure the mouse isn't on any UI element)
+- zoom: You can zoom by scrolling (note: make sure the mouse isn't on any UI element)
 - rotate: You can rotate by holding down the left control key on your keyboard and scrolling
 
 
