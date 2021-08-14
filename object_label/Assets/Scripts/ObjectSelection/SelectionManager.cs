@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SelectionManager : MonoBehaviour {
     [SerializeField] private string selectableTag = "Selectable";
@@ -67,7 +68,6 @@ public class SelectionManager : MonoBehaviour {
     }
 
     public void GetCarInformation(GameObject gameObject) {
-        Debug.Log("GET INFO: " + gameObject.transform.name);
 
         lineRenderer.SetPosition(0, gameObject.GetComponent<MeshRenderer>().bounds.center);
         lineRenderer.SetPosition(1, partLabelText.transform.position);
@@ -80,7 +80,6 @@ public class SelectionManager : MonoBehaviour {
     }
 
     private void SetUpButtons() {
-        Debug.Log("set up buttons");
         //get children objects
         Transform[] allChildren = carGameObject.GetComponentsInChildren<Transform>();
         int index = 0;
@@ -91,6 +90,17 @@ public class SelectionManager : MonoBehaviour {
                 newButton.GetComponent<Button>().onClick.AddListener(() => { 
                     GetCarInformation(child.transform.gameObject); 
                 });
+
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerEnter;
+                entry.callback.AddListener((eventData) => { _selectionResponse.OnSelect(child.transform); });
+                newButton.GetComponent<EventTrigger>().triggers.Add(entry);
+
+                entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerExit;
+                entry.callback.AddListener((eventData) => { _selectionResponse.OnDeselect(child.transform); });
+                newButton.GetComponent<EventTrigger>().triggers.Add(entry);
+
                 newButton.GetComponentInChildren<Text>().text = child.transform.gameObject.name.ToString();
                 newButton.transform.SetParent(buttonContainer.transform);
             }
@@ -98,4 +108,5 @@ public class SelectionManager : MonoBehaviour {
         }
 
     }
+
 }

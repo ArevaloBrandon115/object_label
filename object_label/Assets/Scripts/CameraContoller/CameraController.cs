@@ -12,10 +12,6 @@ namespace CameraController {
 
         [SerializeField] private float PanSpeed = 10;
 
-        //option one
-        //public Vector2 MinXPan = new Vector2(-300, -50);
-        //public Vector2 MinYPan = new Vector2(-50, 150);
-
         [SerializeField] private Vector2 MinXPan = new Vector2(-100, 100);
         [SerializeField] private Vector2 MinYPan = new Vector2(-100, 100);
 
