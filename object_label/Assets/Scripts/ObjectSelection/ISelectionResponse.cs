@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
-internal interface ISelectionRepsonse {
-    void OnSelect(Transform selection);
-    void OnDeselect(Transform selection);
+
+namespace SelectionController {
+    internal interface ISelectionRepsonse {
+        void OnSelect(Transform selection);
+        void OnDeselect(Transform selection);
+    }
 }

@@ -65,11 +65,6 @@ namespace CameraController {
                     //setting new position of movement
                     newPosition = cameraContainer.transform.position + dragStartPosition - dragCurrentPosition;
 
-                    //clamps to our limits
-                    //option one but no rotation
-                    //newPosition.x = Mathf.Clamp(newPosition.x, MinXPan.x, MinXPan.y);
-                    //newPosition.z = Mathf.Clamp(newPosition.z, MinYPan.x, MinYPan.y);
-
                     //with camera container
                     newPosition.x = Mathf.Clamp(newPosition.x, MinXPan.x, MinXPan.y);
                     newPosition.z = Mathf.Clamp(newPosition.z, MinYPan.x, MinYPan.y);
